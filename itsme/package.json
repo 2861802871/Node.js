@@ -1,0 +1,12 @@
+{
+    "name": "itsme",
+    "version": "1.0.0",
+    "main": "index.js",
+    "dependencies": "提供格式化时间,HTMLEscape相关功能",
+    "keywords": [
+        "itsme",
+        "dateFormat",
+        "escape"
+    ],
+    "license": "ISC"
+}
