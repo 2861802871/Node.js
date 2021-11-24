@@ -16,16 +16,17 @@
     "url": "https://github.com/2861802871/Node.js/issues"
   },
   "homepage": "https://github.com/2861802871/Node.js#readme",
-  "description": "",
   "dependencies": {
     "art-template": "^4.13.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jquery": "^3.6.0",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "webpack": "^5.64.1"
-  }
+  },
+  "description": ""
 }
