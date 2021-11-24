@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解决接口跨域问题测试</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <button id="btnGet">GET请求</button>
+    <button id="btnPost">POST请求</button>
+    <button id="btnDelete">DELETE请求</button>
+    <button id="btnJsonp">JSONP请求</button>
+
+
+    <script>
+        $(function () {
+            $('#btnGet').on('click', () => {
+                $.ajax({
+                    method: 'GET',
+                    url: 'http://127.0.0.1/api/get',
+                    data: { name: '大黄', age: 18 },
+                    success: (res) => {
+                        if (res.status !== 0) {
+                            return console.log('请求失败！');
+                        }
+                        console.log(res);
+                    }
+                })
+            })
+
+            $('#btnPost').on('click', () => {
+                $.ajax({
+                    method: 'POST',
+                    url: 'http://127.0.0.1/api/post',
+                    data: { name: '小黄', age: 1 },
+                    success: (res) => {
+                        if (res.status !== 0) {
+                            return console.log('请求失败！');
+                        }
+                        console.log(res);
+                    }
+                })
+            })
+            // 为删除按钮 绑定事件
+            $('#btnDelete').on('click', () => {
+                $.ajax({
+                    method: 'DELETE',
+                    url: 'http://127.0.0.1/api/Delete',
+                    data: { name: '小小黄', age: 0.5 },
+                    success: (res) => {
+                        if (res.status !== 0) {
+                            return console.log('请求失败！');
+                        }
+                        console.log(res);
+                    }
+                })
+            })
+
+            $('#btnJsonp').on('click', () => {
+                $.ajax({
+                    method: 'GET',
+                    url: 'http://127.0.0.1/api/jsonp',
+                    dataType: 'JSONP',
+                    data: { name: '小小黄', age: 0.5 },
+                    success: (res) => {
+
+                        console.log(res);
+                    }
+                })
+            })
+
+        })
+    </script>
+</body>
+
+</html>
