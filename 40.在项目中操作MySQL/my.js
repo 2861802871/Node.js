@@ -6,3 +6,8 @@ const db = mysql.createPool({
     password: 'admin123',//登录数据库的密码
     database: 'my_db_01'//指定要操作数据库的名字
 })
+db.query('select * from users', (err, results) => {
+    if (err) { return console.log(err.message); }
+    console.log(results);
+
+})
