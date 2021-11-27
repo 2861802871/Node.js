@@ -16,7 +16,7 @@ db.query(sqlStr, 3, (err, results) => {
 
 //标记删除,status为1时表示该用户已删除(不是真正的删除数据，可恢复标记)
 const sqlStr1 = 'update users set status=? where id=?'
-db.query(sqlStr1, [1, 4], (err, results) => {
+db.query(sqlStr1, [1, 2], (err, results) => {
     if (err) { console.log(err.message); }
     if (results.affectedRows === 1) {
         console.log('标记删除成功！');
