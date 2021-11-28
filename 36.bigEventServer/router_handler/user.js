@@ -1,7 +1,8 @@
 /*************用户注册和登录模块***************/
 
-const db = require('../db/index')
+const db = require('../db/index')//数据库配置模块
 const bcrypt = require('bcryptjs')//加密包
+
 
 /*--------------注册新用户处理函数-------------*/
 exports.regUser = (req, res) => {
@@ -9,10 +10,10 @@ exports.regUser = (req, res) => {
 
     // console.log(userinfo);//测试是否接收到表单数据
 
-    //检测是否合法
-    if (!userinfo.username || !userinfo.password) {
-        return res.cc('用户名或密码不能为空')
-    }
+    //检测是否合法||后期更改为第三方包验证
+    // if (!userinfo.username || !userinfo.password) {
+    //     return res.cc('用户名或密码不能为空')
+    // }
 
     // 检测用户名是否被占用
     const sql = 'select * from event_user where username = ?'
@@ -44,5 +45,6 @@ exports.regUser = (req, res) => {
 
 /*----------------用户登录处理函数--------------*/
 exports.login = (req, res) => {
-    res.send('login is ok!')
+    const userinfo = req.body//获取合法验证用户登录信息
+    res.send(userinfo)
 }
