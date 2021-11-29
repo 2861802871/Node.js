@@ -6,7 +6,7 @@ const userHandler = require('../router_handler/user')//注册用户和登录处�
 const expressJoi = require('@escook/express-joi')//使用定义的验证规则的包
 const { reg_login_schema } = require('../scheam/user')//导入定义的验证规则
 
-/*------------------注册新用户------------------*/
+/*-----------------注册新用户-----------------*/
 router.post('/reguser', expressJoi(reg_login_schema), userHandler.regUser)
 
 /*------------------用户登录------------------*/

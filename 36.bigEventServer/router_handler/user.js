@@ -2,7 +2,9 @@
 
 const db = require('../db/index')//数据库配置模块
 const bcrypt = require('bcryptjs')//加密包
+const jwt = require('jsonwebtoken')//token包
 
+const config = require('../config')
 
 /*--------------注册新用户处理函数-------------*/
 exports.regUser = (req, res) => {
@@ -46,5 +48,21 @@ exports.regUser = (req, res) => {
 /*----------------用户登录处理函数--------------*/
 exports.login = (req, res) => {
     const userinfo = req.body//获取合法验证用户登录信息
-    res.send(userinfo)
+    const sql = 'select * from event_user where username  = ?'
+    db.query(sql, [userinfo.username], (err, results) => {
+        if (err) return res.cc(err)
+        if (results.length !== 1) return res.cc('登陆失败,用户不存在！')
+        // 拿着用户输入的密码,和数据库中存储的密码进行对比
+        // if (results[0].password !== userinfo.password) { return res.cc('验证不通过，密码错误！') }//不要直接对比
+        const compareResult = bcrypt.compareSync(userinfo.password, results[0].password)
+        if (!compareResult) { return res.cc('验证不通过，密码错误！') }
+        // 验证通过后
+        //  剔除用户密码和头像//j将数据库中的对象展开并将密码和头像清空
+        const user = { ...results[0], password: '', user_pic: '' }
+        //生成加密token字符
+        const tokenStr = jwt.sign(user, config.jwtSECretKey, { expiresIn: '10h' })
+        // 'Bearer ' + tokenStr拼接好字符串前缀方便前端使用
+        res.send({ status: 0, msg: 'Bearer ' + tokenStr })//将不包含密码和头像的token字符串发送给客户端
+    })
+
 }
