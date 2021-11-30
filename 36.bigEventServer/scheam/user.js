@@ -4,8 +4,8 @@ const e = require('express')
 const joi = require('joi')
 
 
-//定义用户名和密码验证规则
-const username = joi.string().alphanum().min(3).max(10).required()//字符串，a-zA-Z0-9,最小长度1，最大长度10，必填项
+//定义用户名和密码验证规则joi.string().alphanum().min(1).max(10).required()
+const username = joi.string().alphanum().min(1).max(10).required()//字符串，a-zA-Z0-9,最小长度1，最大长度10，必填项
 const password = joi.string().pattern(/^[\S]{6,12}$/)//6-12位字符串/^[\S]{6,12}$/
 
 // 定义登录验证规则对象
@@ -31,5 +31,19 @@ exports.updata_userinfor = {
     },
 }
 
+//更新，密码验证
+exports.update_pwd = {
+    body: {
+        oldPwd: password,
+        newPwd: joi.not(joi.ref('oldPwd')).concat(password),
 
+    }
+}
 
+// 更换头像验证：验证是否为base64的数据格式
+const avatar = joi.string().dataUri().required()
+exports.update_avatar = {
+    body: {
+        avatar,
+    }
+}

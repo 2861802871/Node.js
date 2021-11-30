@@ -20,10 +20,6 @@ app.use((req, res, next) => {//处理异常返回数据
     next()
 })
 
-const userRouter = require('./router/user')//导入用户路由模块
-app.use('/api', userRouter)//将用户路由模块注册为全局中间件
-
-
 
 
 // 配置全局中间件
@@ -33,6 +29,9 @@ const { UnauthorizedError } = require('express-jwt')
 // api开头不需要验证
 app.use(expressJWT({ secret: config.jwtSECretKey, algorithms: ['HS256'] }).unless({ path: [/^\/api\//] }))
 
+const userRouter = require('./router/user')//导入用户路由模块
+app.use('/api', userRouter)//将用户路由模块注册为全局中间件
+
 // 放在解析token后面，解析完成后挂载user到req后才能调用req.user.id
 const userinfoRouter = require('./router/usrerinfo')//导入用户信息路由
 app.use('/my', userinfoRouter)//修改户信息路由注册为全局中间件
@@ -40,11 +39,11 @@ app.use('/my', userinfoRouter)//修改户信息路由注册为全局中间件
 // 定义错误级别中间件
 app.use((err, req, res, next) => {
     if (err instanceof joi.ValidationError) {//判断错误是否为joi的实例对象，是否为验证失败导致的错误
-        return res.cc(err)
+        return res.cc('Err:' + err)
     }
     // 捕获身份验证失败的错误
     if (err.name === 'UnauthorizedError') { return res.cc('身份验证失败！' + err) }
-    res.cc(err)//不是表单验证错误返回其他的错误
+    res.send(err)//不是表单验证错误返回其他的错误
 })
 
 app.listen(3007, () => {//监听服务器请求

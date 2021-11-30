@@ -13,9 +13,9 @@ exports.regUser = (req, res) => {
     // console.log(userinfo);//测试是否接收到表单数据
 
     //检测是否合法||后期更改为第三方包验证
-    // if (!userinfo.username || !userinfo.password) {
-    //     return res.cc('用户名或密码不能为空')
-    // }
+    if (!userinfo.username || !userinfo.password) {
+        return res.cc('用户名或密码不能为空')
+    }
 
     // 检测用户名是否被占用
     const sql = 'select * from event_user where username = ?'
@@ -53,10 +53,10 @@ exports.login = (req, res) => {
         if (err) return res.cc(err)
         if (results.length !== 1) return res.cc('登陆失败,用户不存在！')
         // 拿着用户输入的密码,和数据库中存储的密码进行对比
-        // if (results[0].password !== userinfo.password) { return res.cc('验证不通过，密码错误！') }//不要直接对比
+        // if (results[0].password !== userinfo.password) { return res.cc('验证不通过，密码错误！') }//不要直接对比//(可用于未加密密码登录)
         const compareResult = bcrypt.compareSync(userinfo.password, results[0].password)
         if (!compareResult) { return res.cc('验证不通过，密码错误！') }
-        // 验证通过后
+        // // 验证通过后
         //  剔除用户密码和头像//j将数据库中的对象展开并将密码和头像清空
         const user = { ...results[0], password: '', user_pic: '' }
         //生成加密token字符
