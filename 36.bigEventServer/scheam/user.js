@@ -45,5 +45,5 @@ const avatar = joi.string().dataUri().required()
 exports.update_avatar = {
     body: {
         avatar,
-    }
+    },
 }

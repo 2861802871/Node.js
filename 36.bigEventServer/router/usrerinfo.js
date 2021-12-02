@@ -19,4 +19,4 @@ router.post('/updatepwd', expressJoi(update_pwd), userinfo_handler.updatepwd)
 //更换头像
 router.post('/update/avatar', expressJoi(update_avatar), userinfo_handler.updateAvatar)
 
-module.exports = router//向外共享路由
+module.exports = router//向外共享路由 

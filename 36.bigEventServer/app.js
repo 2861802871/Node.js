@@ -36,6 +36,14 @@ app.use('/api', userRouter)//将用户路由模块注册为全局中间件
 const userinfoRouter = require('./router/usrerinfo')//导入用户信息路由
 app.use('/my', userinfoRouter)//修改户信息路由注册为全局中间件
 
+// 导入获取文章分类列表路由并注册为全局中间件
+const artCateRouter = require('./router/artate')
+app.use('/my/article', artCateRouter)
+
+// 导入获取文章列表路由并注册为全局中间件
+const articleRouter = require('./router/article')
+app.use('my/article', articleRouter)
+
 // 定义错误级别中间件
 app.use((err, req, res, next) => {
     if (err instanceof joi.ValidationError) {//判断错误是否为joi的实例对象，是否为验证失败导致的错误

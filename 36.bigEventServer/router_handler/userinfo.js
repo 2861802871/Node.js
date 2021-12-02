@@ -57,5 +57,10 @@ exports.updatepwd = (req, res) => {
 
 // 更换头像处理函数
 exports.updateAvatar = (req, res) => {
-    res.send('ok')
+    const sql = `update event_user set user_pic =? where id =?`
+    db.query(sql, [req.body.avatar, req.user.id], (err, results) => {
+        if (err) { return res.cc('Err:' + err) }
+        if (results.affectedRows !== 1) { return res.cc('服务器繁忙，更换头像失败！') }
+        res.cc('更换头像成功', 0)
+    })
 }
