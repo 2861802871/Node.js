@@ -1,3 +1,4 @@
+const { string } = require('joi')
 const joi = require('joi')//定义验证规则的模块
 
 const name = joi.string().max(50).required()
@@ -26,4 +27,19 @@ exports.update_cate_shema = {
         alias,
     },
 
+}
+
+//添加文章数据验证
+const title = joi.string().required()
+const cate_id = joi.number().integer().min(1).required()
+const content = joi.string().required().allow('')//必填项允许为空字符串
+const state = joi.string().valid('已发布', '草稿').required()//必填项和法值是已发布和草稿
+
+exports.add_article_schema = {
+    body: {
+        title,
+        cate_id,
+        content,
+        state,
+    }
 }

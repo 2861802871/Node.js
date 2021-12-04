@@ -1,7 +1,7 @@
 const express = require('express')//服务器
 const app = express()//创建服务器
 // const joi = require('@hapi/joi')
-const joi = require('joi')
+const joi = require('joi')//
 
 
 const cors = require('cors')//跨域请求
@@ -20,7 +20,8 @@ app.use((req, res, next) => {//处理异常返回数据
     next()
 })
 
-
+// 托管静态资源文件
+app.use('/uploads', express.static('./uploads'))
 
 // 配置全局中间件
 const expressJWT = require('express-jwt')
@@ -38,11 +39,11 @@ app.use('/my', userinfoRouter)//修改户信息路由注册为全局中间件
 
 // 导入获取文章分类列表路由并注册为全局中间件
 const artCateRouter = require('./router/artate')
-app.use('/my/article', artCateRouter)
+app.use('/my/artate', artCateRouter)
 
-// 导入获取文章列表路由并注册为全局中间件
+// 导入发布文章列表路由并注册为全局中间件
 const articleRouter = require('./router/article')
-app.use('my/article', articleRouter)
+app.use('/my/article', articleRouter)
 
 // 定义错误级别中间件
 app.use((err, req, res, next) => {
@@ -55,5 +56,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(3007, () => {//监听服务器请求
-    console.log('Express server running at 127.0.0.1:3007');
+    console.log('Express server running at http://127.0.0.1:3007');
 })

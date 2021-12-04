@@ -62,7 +62,7 @@ exports.login = (req, res) => {
         //生成加密token字符
         const tokenStr = jwt.sign(user, config.jwtSECretKey, { expiresIn: '10h' })
         // 'Bearer ' + tokenStr拼接好字符串前缀方便前端使用
-        res.send({ status: 0, msg: 'Bearer ' + tokenStr })//将不包含密码和头像的token字符串发送给客户端
+        res.send({ status: 0, token: 'Bearer ' + tokenStr })//将不包含密码和头像的token字符串发送给客户端
     })
 
 }
